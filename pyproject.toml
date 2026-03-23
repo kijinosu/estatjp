@@ -13,7 +13,7 @@ requires = ["hatchling"]
 [project]
 name = "estatjp"
 # You can chose to use dynamic versioning with hatch or static where you add it manually.
-version = "v0.1.1"
+version = "v0.1.2"
 
 description = "A Python package for accessing Japanese government data on its e-Stat portal"
 authors = [

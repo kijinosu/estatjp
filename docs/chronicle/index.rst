@@ -14,6 +14,7 @@ This folder contains Jupyter notebooks created in the development of `estatjp`.
 
    DevAPI01.ipynb
    DevAPI02.ipynb
+   exceptions-dev-01.ipynb
 
 ## DevAPI01.ipynb
 
