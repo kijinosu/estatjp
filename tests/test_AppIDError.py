@@ -15,19 +15,23 @@ def CheckForAppIdString(url):
             raise
     return True
 
-def driver_function(url):
+def AppIDError_driver_function(url):
     result = False
     try:
-        result = api.get_csv_data(url)
+        result = CheckForAppIdString(url)
     except xs.AppIDError as ex:
         result = ex
     except Exception as xc:
-        result = xc
+        raise
     return result
 
 
 def test_AppIDError_true():
-    res = driver_function(urltest1)
+    res = AppIDError_driver_function(urltest1)
     assert isinstance(res,xs.AppIDError) == True
 
+def test_AppIDError_false():
+    res = AppIDError_driver_function(urltest2)
+    assert isinstance(res,xs.AppIDError) == False
     
+

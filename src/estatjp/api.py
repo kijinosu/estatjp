@@ -13,7 +13,7 @@ import requests
 import tempfile
 import re
 import datetime
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 import os
 from estatjp import exceptions as xs
 
@@ -28,19 +28,22 @@ def get_csv_data(url, description = datetime.datetime.now()):
     
     """
     try:
-        load_dotenv()
+        dotenv_values()
     except (FileNotFoundError,IOError) as e:
         e.add_note('Environment variable file (.env) not found. See README.')
         raise
 
     try:
         app_id = os.environ['ESTAT_APP_ID']
-    except KeyError as e:
+    except KeyError as ek:
+        e = xs.AppIDMissingError
         e.add_note('Environment variable ESTAT_APP_ID not found. See README.')
-        raise
+        raise e
 
     if app_id == None:
-        raise OSError("Value of environment variable 'ESTAT_APP_ID' not found. See README.")
+        e = xs.AppIDMissingError
+        e.add_note("Value of environment variable 'ESTAT_APP_ID' is 'none'. See README.")
+        raise e
 
     url_split = url.split("appId=")
     if len(url_split) != 2:
@@ -86,7 +89,7 @@ def get_csv_data(url, description = datetime.datetime.now()):
                     fp.close()
                     if inheader == True:
                         errmsg = "The stream that e-Stat returned lacks a 'VALUE' line. See temp file: " + fheader.name
-                        raise Exception(errmsg)
+                        raise xs.MissingVALUEError(errmsg)
                     dfHeader = pd.read_csv(fheader.name, names = range(colnum))
                     dfHeader = dfHeader.dropna(axis=1, how = "all")
                     dfMain = pd.read_csv(fp.name)
@@ -94,7 +97,8 @@ def get_csv_data(url, description = datetime.datetime.now()):
                     result['Header'] = dfHeader
                     result['Main'] = dfMain
 
-    except requests.RequestException as e:
+    except requests.exceptions.RequestException as e:
+            e.add_note(f'Request Exception from estatjp.api.get_csv_data for url: {url}')
             raise
 
     return result
