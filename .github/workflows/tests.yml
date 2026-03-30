@@ -40,6 +40,6 @@ jobs:
 
       - name: Run test suite
         run: |
-          run: hatch run +py=${{ matrix.python-version }} test:run
+          hatch run +py=${{ matrix.python-version }} test:run
 
           
