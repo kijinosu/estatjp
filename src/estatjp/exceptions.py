@@ -50,3 +50,9 @@ class estatjpError(Exception):
 class AppIDError(estatjpError):
     user_err_msg = "The API request url is lacking a required 'appId=' string."
     pass
+
+"""EstatCSVError is raised when the CSV file received does not conform to specifications.
+"""
+class EstatCSVError(estatjpError):
+    user_err_msg = "EstatCSVError: CSV file received does not conform to specifications"
+    pass
