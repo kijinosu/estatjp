@@ -42,6 +42,6 @@ jobs:
 
       - name: Run test suite
         run: |
-          pytest --cov={{ package_name }} --cov-report=term-missing --cov-report=xml
+          pytest --cov=estatjp --cov-report=term-missing --cov-report=xml
 
           
