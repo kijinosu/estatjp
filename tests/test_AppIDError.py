@@ -4,18 +4,7 @@ urltest2 = 'http://api.e-stat.go.jp/rest/3.0/app/getSimpleStatsData?appId=&lang=
 from estatjp import exceptions as xs
 from estatjp import api
 
-def CheckForAppIdString(url):
-    url_split = url.split("appId=")
-    if len(url_split) != 2:
-        err_msg = "From CheckForAppIdString: " + url
-        try:
-            raise xs.AppIDError()
-        except xs.AppIDError as e:
-            e.add_note(err_msg)
-            raise
-    return True
-
-def driver_function(url):
+def AppIDError_driver_function(url):
     result = False
     try:
         result = api.get_csv_data(url)
@@ -27,7 +16,10 @@ def driver_function(url):
 
 
 def test_AppIDError_true():
-    res = driver_function(urltest1)
+    res = AppIDError_driver_function(urltest1)
     assert isinstance(res,xs.AppIDError) == True
 
+def test_AppIDError_false():
+    res = AppIDError_driver_function(urltest2)
+    assert isinstance(res,xs.AppIDError) == False
     
