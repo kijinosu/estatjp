@@ -2,8 +2,12 @@
 estatjp
 =======
 
-.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.19124886.svg
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.19124885.svg
   :target: https://doi.org/10.5281/zenodo.19124885
+
+.. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-teal.json
+    :target: https://github.com/copier-org/copier
+    :alt: Copier
 
 `E-Stat <https://www.e-stat.go.jp/en>`__ is a widely used portal site
 for accessing Japanese governmental statistical data. Began operation in

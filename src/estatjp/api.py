@@ -15,6 +15,7 @@ import re
 import datetime
 from dotenv import load_dotenv
 import os
+from estatjp import exceptions as xs
 
 def get_csv_data(url, description = datetime.datetime.now()):
     """Retrieve a CSV stream from e-Stat using an API url and create a pandas.DataFrame.
@@ -43,7 +44,12 @@ def get_csv_data(url, description = datetime.datetime.now()):
 
     url_split = url.split("appId=")
     if len(url_split) != 2:
-        raise Exception("Invalid API url")
+        err_msg = "From CheckUrl: " + url
+        try:
+            raise xs.AppIDError()
+        except xs.AppIDError as e:
+            e.add_note(err_msg)
+            raise
     url = url_split[0] + "appId=" + app_id + url_split[1]
 
     # the csv has several rows of metadata terminated by a row starting with "VALUE".

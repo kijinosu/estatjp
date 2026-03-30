@@ -2,15 +2,13 @@
 """
 from datetime import datetime
 
-class AppIDError(Exception):
+class estatjpError(Exception):
     """Exception for when API request url is lacking a required 'appId=' string. Ref: <https://note.com/hafnium/n/nbb6179633a5e>
     
     Derives from built-in Exception class
     
     """
     internal_err_msg = "estatjp AppIDError"
-    user_err_msg = "The API request url is lacking a required 'appId=' string."
-
     def __init__(self, *args, user_err_msg=None):
         """
         :param args: If provided, the first argument replaces internal_err_msg.
@@ -41,10 +39,14 @@ class AppIDError(Exception):
         """
         Function 'get_notes`
 
-        :return: Concatenated list of added notes
+        :return: Concatenated list of notes added with the add_note() build-in function.
 
         """
         li = self.__dict__.get("__notes__")
         return ' '.join(li)
 
-
+"""AppIDError is raised when the API request query string lacks the 'appId=' string.
+"""
+class AppIDError(estatjpError):
+    user_err_msg = "The API request url is lacking a required 'appId=' string."
+    pass
