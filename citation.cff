@@ -12,6 +12,8 @@ contact:
       family-names: Engel
       given-names: Alan
 identifiers:
+  - type: doi
+    value: 10.5281/zenodo.19124885
   - description: "All versions"
     type: doi
     value: 10.5281/zenodo.19124885
