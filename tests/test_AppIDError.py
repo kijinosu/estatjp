@@ -11,7 +11,7 @@ def AppIDError_driver_function(url):
     except xs.AppIDError as ex:
         result = ex
     except Exception as xc:
-        result = xc
+        raise
     return result
 
 
