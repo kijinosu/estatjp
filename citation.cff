@@ -5,6 +5,8 @@ authors:
 cff-version: 1.2.0
 title: "estatjp - a Python package for accessing Japanese government data from its e-Stat portal"
 type: software
+repository-code: https://github.com/kijinosu/estatjp
+license: MIT
 contact:
     - email: "kijinosu@proton.me"
       family-names: Engel
@@ -12,4 +14,14 @@ contact:
 identifiers:
   - type: doi
     value: 10.5281/zenodo.19124885
+  - description: "All versions"
+    type: doi
+    value: 10.5281/zenodo.19124885
+  - description: "Version 0.1.1"
+    type: doi
+    value: 10.5281/zenodo.19124886
+keywords:
+  - MeSH: "Government Programs/statistics & numerical data"
+  - Python
+version: 0.1.1
 date-released: 2026-03-20

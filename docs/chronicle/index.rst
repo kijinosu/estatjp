@@ -14,6 +14,7 @@ This folder contains Jupyter notebooks created in the development of `estatjp`.
 
    DevAPI01.ipynb
    DevAPI02.ipynb
+   exceptions-dev-01.ipynb
 
 ## DevAPI01.ipynb
 
@@ -22,6 +23,10 @@ This traces development of a working `get_data(url)` function that becomes `esta
 ## DevAPI02.ipynb
 
 Add and test exception handling for the `get_data(url)` function that becomes `estatjp.api.get_csv_data()`.
+
+## The following traces develpment of an exceptions module.
+
+exceptions-dev-01.ipynb
 
 # References
 

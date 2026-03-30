@@ -13,7 +13,7 @@ requires = ["hatchling"]
 [project]
 name = "estatjp"
 # You can chose to use dynamic versioning with hatch or static where you add it manually.
-version = "v0.1.1"
+version = "v0.1.2.2"
 
 description = "A Python package for accessing Japanese government data on its e-Stat portal"
 authors = [
@@ -41,6 +41,7 @@ dependencies = [
     "pybtex-docutils>=1.0.2",
     "importlib_metadata>=3.6; python_version < '3.10'",
     "pandas>=3.0.1",
+    "dotenv>=0.9.9",
 ]
 exclude_patterns = ["_build"]
 bibtex_bibfiles = ["bibliography.bib"]
@@ -107,6 +108,9 @@ packages = ["src/estatjp"]
 
 ######## Configure pytest for your test suite ########
 [tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
 testpaths = ["tests"] # Tells pytest what directory tests are in
 markers = ["raises"] # Tells pytest to not raise a warning if you use @pytest.mark.raises
 
@@ -168,7 +172,7 @@ features = [
 ]
 
 [[tool.hatch.envs.test.matrix]]
-python = ["3.12", "3.13"]
+python = ["3.14"]
 
 [tool.hatch.envs.test.scripts]
 run = "pytest {args:--cov=estatjp --cov-report=term-missing --cov-report=xml}"
