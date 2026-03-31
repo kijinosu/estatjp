@@ -6,7 +6,7 @@ on:
   push:
 
     branches:
-      - exceptions # for initial development. Replace with main when ready.
+      - main
   schedule:
     - cron: '0 23 * * Sun'
 
