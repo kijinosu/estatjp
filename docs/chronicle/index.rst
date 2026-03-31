@@ -24,6 +24,10 @@ This traces development of a working `get_data(url)` function that becomes `esta
 
 Add and test exception handling for the `get_data(url)` function that becomes `estatjp.api.get_csv_data()`.
 
+## The following traces develpment of an exceptions module.
+
+exceptions-dev-01.ipynb
+
 # References
 
 .. bibliography::
