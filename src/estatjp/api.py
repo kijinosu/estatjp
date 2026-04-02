@@ -4,8 +4,6 @@ The API provides data in CSV, JSON and XML formats. This version provides for th
 
 The main task is to request and parse a CSV stream to produce a `pandas.DataFrame` object. The `pandas.read_csv()` cannot be used as-is because CSV streams from e-Stat start with a header of metadata which confuses pandas. For more detail see development notes as chronicled in Read the Docs pages [DevAPI01.ipynb](https://estatpy.readthedocs.io/en/latest/chronicle/DevAPI01.html) and [DevAPI02.ipynb](https://estatpy.readthedocs.io/en/latest/chronicle/DevAPI02.html).
 
-
-
 """
 import pandas as pd
 import os
@@ -97,8 +95,14 @@ def get_csv_data(url, description = datetime.datetime.now()):
                     result['Header'] = dfHeader
                     result['Main'] = dfMain
 
-    except requests.exceptions.RequestException as e:
-            e.add_note(f'Request Exception from estatjp.api.get_csv_data for url: {url}')
+    except requests.RequestException as e:
+            e.add_note("estatjp.api.get_csv_data: RequestException raised")
+            raise
+    except xs.MissingVALUEError as e:
+            e.add_note("estatjp.api.get_csv_data: MissingVALUEError raised")
+            raise
+    except Exception as e:
+            e.add_note("estatjp.api.get_csv_data: Exception raised but not provided for")
             raise
 
     return result

@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add exceptions module
 - Add Getting Started tutorial
 
+## [v0.1.2.2] - (2026-03-31)
+
+- Add exceptions.py module.
+- Modified api.py module to use estatjp exceptions module.
+- Add test suite.
+- Add tests.yml to github workflows
+
 ## [v0.1.1] - (2026-03-20)
 
 - First "complete" set of documentation
