@@ -8,6 +8,7 @@ Welcome to estatjp's Documentation
 
    Home <self>
    Chronicle <chronicle/index>
+   Tutorials <tutorials/index>
 
 --------
 Overview

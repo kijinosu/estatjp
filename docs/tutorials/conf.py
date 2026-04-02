@@ -7,7 +7,7 @@ import importlib.metadata
 from datetime import datetime
 
 # Ensure src/ is on the path so autodoc can find the package
-sys.path.insert(0, os.path.abspath("../../src"))
+
 
 # Get the year so it automatically updates
 current_year = datetime.now().year
@@ -24,7 +24,7 @@ html_show_sphinx = False
 try:
     version = importlib.metadata.version("estatjp")
 except importlib.metadata.PackageNotFoundError:
-    version = "v0.1.3
+    version = "v0.1.3"
 
 # -- General configuration -----------------------------------------------------
 
@@ -34,7 +34,6 @@ except importlib.metadata.PackageNotFoundError:
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     "nbsphinx",
-    # "myst_parser",
     "sphinx_design",
     "sphinx_copybutton",
     "sphinx.ext.intersphinx",
@@ -87,7 +86,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # AutoAPI configuration
 autoapi_type = "python"
 # point AutoAPI at your package sources; adjust if using src layout
-autoapi_dirs = ["../src"]
+autoapi_dirs = ["../../src"]
 # Don't let AutoAPI automatically insert a toctree (avoid duplicates)
 autoapi_add_toctree = False
 autoapi_keep_files = False
