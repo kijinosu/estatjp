@@ -45,20 +45,23 @@ class estatjpError(Exception):
         li = self.__dict__.get("__notes__")
         return ' '.join(li)
 
-"""AppIDError is raised when the API request query string lacks the 'appId=' string.
-"""
 class AppIDError(estatjpError):
+    """
+    AppIDError is raised when the API request query string lacks the 'appId=' string.
+    """
     user_err_msg = "The API request url is lacking a required 'appId=' string."
     pass
 
-"""AppIDMissingError is raised whe the API ID is missing from the .env file.
-"""
 class AppIDMissingError(estatjpError):
+    """
+    AppIDMissingError is raised whe the API ID is missing from the .env file.
+    """
     user_err_msg = "The API ID is missing from the .env file."
     pass
 
-"""MissingVALUEError is raised when the response content file is missing a line starting with the string 'VALUE'.
-"""
 class MissingVALUEError(estatjpError):
+    """
+    MissingVALUEError is raised when the response content file is missing a line starting with the string 'VALUE'.
+    """
     user_err_msg = "the response content file is missing a line starting with the string 'VALUE'."
     pass
