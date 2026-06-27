@@ -30,11 +30,11 @@ def get_csv_data(url, key=None, values=None, description = datetime.datetime.now
     :type description: object
 
     :return: Dictionary containing the Header in the form of a pandas.DataFrame, the Main table also in the form of a pandas.DataFrame, and the Description.
-    :retype: Dictionary containing a Description object; a Header (pandas.dataframe) with the metadata, and the Main pandas.dataframe
+    :rtype: Dictionary containing a Description object; a Header (pandas.dataframe) with the metadata, and the Main pandas.dataframe
 
     :raises AppIDError: If request returns an error in the appId supplied by the user.
     :raises AppIDMissingError: If appId is not provided.
-    :raises MissingVALUEError: If responses does not contain the VALUE keyword that demarcates the end of the metadata and start of the table.
+    :raises MissingVALUEError: If responses does not contain the VALUE keyword that marks the end of the metadata and the start of the main data table.
     :raises RequestException: If request returns an exception.
     :raises TruncatedResultError: If query retrieves more than the 100,000-cell limit.
     :raises Exception: If unhandled exception.
@@ -129,7 +129,7 @@ def insert_filter_key(url, key):
     :param key: A filter key to be inserted into the API url call.
     :type key: string
 
-    :return url:
+    :return: url
     :rtype: string
 
     """
@@ -154,7 +154,7 @@ def insert_filter(url, key, values):
     :param values: A list of value(s) to be inserted after the key.
     :type values: list
     
-    :return url:
+    :return: url
     :rtype: string
 
     """
@@ -174,7 +174,7 @@ def insert_appid(url):
     :param url: API url obtained from e-Stat.
     :type url: string
 
-    :return url:
+    :return: url
     :rtype: string
 
     :raises FileNotFoundError,IOError: If environment variable file (.env) not found. See README.
