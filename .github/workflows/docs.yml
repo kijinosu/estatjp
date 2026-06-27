@@ -18,7 +18,7 @@ jobs:
             python-version: ${{ matrix.python-version }}
 
       - name: Setup pandoc
-        uses: r-lib/actions/setup-pandoc@4f58f8ffa872cbd4cb016c51ec497fdbe0a02711 #v2
+        uses: r-lib/actions/setup-pandoc@a51a8012b0aab7c32ef9d19bf54da93f3254335e #v2
         with:
           pandoc-version: '3.1.11' # The pandoc version to download (if necessary) and use.
 
@@ -29,9 +29,9 @@ jobs:
       - name: Install dependencies
         run: |
             python -m pip install --upgrade pip
+            python -m pip install ipython
             python -m pip install -r requirements.txt
 
       - name: Build documentation using Hatch
         run: |
-            python -m pip install ipython
             hatch run docs:build
