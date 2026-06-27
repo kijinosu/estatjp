@@ -53,6 +53,14 @@ class AppIDError(estatjpError):
     pass
 
 
+class TruncatedResultError(estatjpError):
+    """
+    TruncatedResultError is raised when the API request query retrieves more cells than the 100,000-cell limit.
+    """
+    user_err_msg = "The API query retrieved more than the 100,000-cell limit. The response is truncated."
+    pass
+
+
 class EstatCSVError(estatjpError):
     """
     EstatCSVError is raised when the CSV file received does not conform to specifications.
