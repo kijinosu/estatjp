@@ -24,7 +24,7 @@ html_show_sphinx = False
 try:
     version = importlib.metadata.version("estatjp")
 except importlib.metadata.PackageNotFoundError:
-    version = "v0.1.3
+    version = "v0.1.4"
 
 # -- General configuration -----------------------------------------------------
 
