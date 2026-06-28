@@ -25,11 +25,14 @@ readme = {"file" = "README.md", "content-type" = "text/markdown"}
 # readme = "README.rst"
 # Please consult https://pypi.org/classifiers/ for a full list.
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Database :: Front-Ends",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 # TODO: add keywords
 keywords = []

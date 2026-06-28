@@ -24,9 +24,7 @@ html_show_sphinx = False
 try:
     version = importlib.metadata.version("estatjp")
 except importlib.metadata.PackageNotFoundError:
-    version = "v0.1.3"
-
-# -- General configuration -----------------------------------------------------
+    version = "v0.1.4"
 
 # -- General configuration -----------------------------------------------------
 
@@ -34,6 +32,7 @@ except importlib.metadata.PackageNotFoundError:
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     "nbsphinx",
+    "ipython",
     # "myst_parser",
     "sphinx_design",
     "sphinx_copybutton",

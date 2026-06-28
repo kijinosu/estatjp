@@ -10,11 +10,12 @@ python:
 build:
   os: ubuntu-lts-latest
   tools:
-    python: "3.14"
+    python: "3.12"
   commands:
     - pip install --upgrade pip
     - pip install -e '.[docs]'
     - pip install nbsphinx
+    - pip install ipython
     - pip install sphinxcontrib.bibtex
     # Make sure RTD can find the html output
     - sphinx-apidoc -f -o docs src/estatjp
