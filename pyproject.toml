@@ -67,7 +67,7 @@ dev = [
 
 docs = [
     "nbsphinx",
-    "ipython",
+    "ipython>=9.11.0",
     "sphinx~=8.0",
     "myst-parser>=4.0",
     "pydata-sphinx-theme~=0.16",
