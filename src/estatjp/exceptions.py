@@ -52,6 +52,12 @@ class AppIDError(estatjpError):
     user_err_msg = "The API request url is lacking a required 'appId=' string."
     pass
 
+class AppIDMissingError(estatjpError):
+    """
+    AppIDMissingError is raised whe the API ID is missing from the .env file.
+    """
+    user_err_msg = "The API ID is missing from the .env file."
+    pass
 
 class TruncatedResultError(estatjpError):
     """
@@ -60,20 +66,12 @@ class TruncatedResultError(estatjpError):
     user_err_msg = "The API query retrieved more than the 100,000-cell limit. The response is truncated."
     pass
 
-
 class EstatCSVError(estatjpError):
     """
     EstatCSVError is raised when the CSV file received does not conform to specifications.
     """
     user_err_msg = "EstatCSVError: CSV file received does not conform to specifications"
     
-class AppIDMissingError(estatjpError):
-    """
-    AppIDMissingError is raised whe the API ID is missing from the .env file.
-    """
-    user_err_msg = "The API ID is missing from the .env file."
-    pass
-
 class MissingVALUEError(estatjpError):
     """
     MissingVALUEError is raised when the response content file is missing a line starting with the string 'VALUE'.
