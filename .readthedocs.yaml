@@ -17,6 +17,5 @@ build:
     - pip install nbsphinx
     - pip install sphinxcontrib.bibtex
     # Make sure RTD can find the html output
-    - hatch run docs:build
     - sphinx-apidoc -f -o docs src/estatjp
     - sphinx-build -M html docs/ _readthedocs/
