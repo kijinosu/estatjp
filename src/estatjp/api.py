@@ -1,6 +1,6 @@
 """A module for accessing e-Stat data using its API.
 
-The API provides data in CSV, JSON and XML formats. This version provides for the CSV format only.
+The API provides data in CSV, JSON and XML formats. This version provides for the CSV format only. It implements features of the [e-Stat API Version 4.4](https://www.e-stat.go.jp/api/api-info/e-stat-manual/#api_4_4).
 
 The main task is to request and parse a CSV stream to produce a `pandas.DataFrame` object. The `pandas.read_csv()` cannot be used as-is because CSV streams from e-Stat start with a header of metadata which confuses pandas. For more detail see development notes as chronicled in Read the Docs pages [DevAPI01.ipynb](https://estatpy.readthedocs.io/en/latest/chronicle/DevAPI01.html) and [DevAPI02.ipynb](https://estatpy.readthedocs.io/en/latest/chronicle/DevAPI02.html).
 
@@ -12,6 +12,7 @@ import tempfile
 import re
 import datetime
 from dotenv import dotenv_values
+import urllib.parse as p
 from estatjp import exceptions as xs
 
 def get_csv_data(url, key=None, values=None, description = datetime.datetime.now()):
@@ -36,7 +37,6 @@ def get_csv_data(url, key=None, values=None, description = datetime.datetime.now
     :raises AppIDMissingError: If appId is not provided.
     :raises MissingVALUEError: If responses does not contain the VALUE keyword that marks the end of the metadata and the start of the main data table.
     :raises RequestException: If request returns an exception.
-    :raises TruncatedResultError: If query retrieves more than the 100,000-cell limit.
     :raises Exception: If unhandled exception.
     
     """
@@ -64,6 +64,38 @@ def get_csv_data(url, key=None, values=None, description = datetime.datetime.now
     # the csv has several rows of metadata terminated by a row starting with "VALUE".
     # The data table starts on the next row.
     # Put the metadata in a StringIO.
+    result = _get_csv_data_call(url = url, description=description)
+    
+    # Check for truncation of cells beyond 100,000-cell limit
+    dfh = result.get('Header')
+    filtered_dfh = dfh.query("@dfh[0] == 'NEXT_KEY'")
+    
+    while filtered_dfh.empty == False:
+        nextkey = filtered_dfh[1].astype(str)
+        loopurl = insert_filter(url, key='startPosition', values=nextkey)
+        loopres = _get_csv_data_call(loopurl)
+        loopdfh = loopres.get('Header')
+        filtered_dfh = loopdfh.query("@loopdfh[0] == 'NEXT_KEY'")
+        main1 = result['Main']
+        mainloop = loopres['Main']
+        main1 = pd.concat([main1, mainloop], ignore_index=True)
+        result['Main']  =main1
+
+    return result
+
+def _get_csv_data_call(url, description = datetime.datetime.now()):
+    """This core call takes a fully formed API url and requests a response from the e-Stat server.
+
+    :param url: An API url obtained from e-Stat and modified locally to include the user's appId and other query keys and values
+    :type url: string
+
+    :param description: An optional object that the user can supply to help document her search. The default is the time of running this function.
+    :type description: object
+
+    :return: Dictionary containing the Header in the form of a pandas.DataFrame, the Main table also in the form of a pandas.DataFrame, and the Description.
+    :rtype: Dictionary containing a Description object; a Header (pandas.dataframe) with the metadata, and the Main pandas.dataframe
+
+    """
     result = {}
     try:
         with requests.get(url,stream=False) as estatresponse: # chunking in iter_lines doesn't work for stream=True
@@ -95,52 +127,18 @@ def get_csv_data(url, key=None, values=None, description = datetime.datetime.now
                     fp.close()
                     if inheader == True:
                         errmsg = "The stream that e-Stat returned lacks a 'VALUE' line. See temp file: " + fheader.name
-                        raise xs.MissingVALUEError(errmsg)
-                    dfHeader = pd.read_csv(fheader.name, names = range(colnum))
+                        raise Exception(errmsg)
+                    dfHeader = pd.read_csv(fheader.name, names = range(colnum), dtype=str)
                     dfHeader = dfHeader.dropna(axis=1, how = "all")
-                    dfMain = pd.read_csv(fp.name)
+                    dfMain = pd.read_csv(fp.name, dtype=str)
                     result['Description'] = description
                     result['Header'] = dfHeader
                     result['Main'] = dfMain
 
     except requests.RequestException as e:
-            e.add_note("estatjp.api.get_csv_data: RequestException raised")
             raise
-    except xs.MissingVALUEError as e:
-            e.add_note("estatjp.api.get_csv_data: MissingVALUEError raised")
-            raise
-    except Exception as e:
-            e.add_note("estatjp.api.get_csv_data: Exception raised but not provided for")
-            raise
-
-    # Check for truncation of cells beyond 100,000-cell limit
-    totnum = dfHeader.query("@dfHeader[0] == 'OVERALL_TOTAL_NUMBER'")[1].to_numpy(dtype='int64')[0]
-    if totnum > 100000 :
-        raise xs.TruncatedResultError(f'get_csv_data retrieved ' + str(totnum) + f' cells. Response truncated beyond 100,000.')
 
     return result
-
-def insert_filter_key(url, key):
-    """Insert a filter key into the API if the key is not already present.
-
-    :param url: API url obtained from e-Stat.
-    :type url: string
-
-    :param key: A filter key to be inserted into the API url call.
-    :type key: string
-
-    :return: url
-    :rtype: string
-
-    """
-    # Check if the key is already in the url.
-    keypattern = re.compile("&" + key + "=")
-    ismatch = keypattern.match(url)
-    if ismatch is None:
-        appidpat = re.compile("&appId=")
-        appidpos = appidpat.search(url)
-        url = url[0:appidpos.start()] + "&" + key + "=" + url[appidpos.start():]
-    return url
 
 def insert_filter(url, key, values):
     """Insert a filter key and set of values to be applied.
@@ -159,13 +157,15 @@ def insert_filter(url, key, values):
 
     """
     if key != None:
-        url = insert_filter_key(url, key)
-        if values != None:
-            vallist = list(map(str, values))
-            valstring = "%2C".join(vallist)
-            url_split = url.split("&" + key + "=")
-            url = url_split[0] + "&" + key + "=" + valstring + url_split[1]
-    return url
+        split = p.urlsplit(url)
+        qs = p.parse_qs(split.query, keep_blank_values=True)
+        vallist = list(map(str, values))
+        valq = ",".join(vallist)
+        qs[key] = [valq]
+        qnew = p.urlencode(qs,doseq=True)
+        splitnew = split._replace(query=qnew)
+        urlrev = splitnew.geturl()
+        return urlrev
 
 from dotenv import load_dotenv
 def insert_appid(url):
@@ -197,9 +197,11 @@ def insert_appid(url):
     if app_id == None:
         raise xs.AppIDMissingError("Value of environment variable 'ESTAT_APP_ID' not found. See README.")
     
-    url_split = url.split("appId=")
-    if len(url_split) != 2:
-        raise xs.AppIDError("Invalid API url")
-    url = url_split[0] + "appId=" + app_id + url_split[1]
+    split = p.urlsplit(url)
+    qs = p.parse_qs(split.query, keep_blank_values=True)
+    qs['appId'] = [app_id]
+    qnew = p.urlencode(qs,doseq=True)
+    splitnew = split._replace(query=qnew)
+    urlrev = splitnew.geturl()
+    return urlrev
 
-    return url
