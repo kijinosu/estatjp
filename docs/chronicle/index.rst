@@ -16,6 +16,7 @@ This folder contains Jupyter notebooks created in the development of `estatjp`.
    DevAPI02.ipynb
    exceptions-dev-01.ipynb
    apiurl-functions-01.ipynb
+   apiurl-functions-02.ipynb
 
 ## DevAPI01.ipynb
 
@@ -31,7 +32,11 @@ Traces develpment of an exceptions module.
 
 ## apiurl-functions-01.ipynb
 
-Functions for editing the API url
+Developing functions for manipulating the API url
+
+## apiurl-functions-02.ipynb
+
+Testing the functions after building them into estatjp v0.1.5
 
 # References
 
