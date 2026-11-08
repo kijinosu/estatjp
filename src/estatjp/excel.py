@@ -5,9 +5,14 @@ e-Stat provides two forms of Excel workbooks: pivot analytical and reporting. Ne
 The main task is to produce a `pandas.DataFrame` object. See development notes as chronicled in Read the Docs pages [pivot-xslx-functions-01.ipynb](https://estatjp.readthedocs.io/en/latest/chronicle/pivot-xslx-functions-01.html).
 
 """
+import re
+import datetime as dt
 import requests
 import pyrfc6266
 from pathlib import Path
+import pandas as pd
+from openpyxl import worksheet
+from openpyxl import load_workbook
 from estatjp import exceptions as xs
 
 def download_to_folder(
@@ -58,10 +63,62 @@ def download_to_folder(
         print(f"Download failed: {e}")
         return None
 
+def get_dataformat(xlsxpath, verbose=False):
+    """There are four known dataformats among the xlsx files
+    from E-Stat: cross tabulated format (CTF), column-oriented format
+    (COF), pivot (PVT), and pivot but no cache records. 
+    Determine format from file.
 
-import pandas as pd
-import openpyxl
-from openpyxl import worksheet
+    :param xlsxpath: Path to xlsx file
+    :type xlsxpath: Path
+
+    :param verbose: Provide messaging to track progress.
+    :type verbose: bool
+
+    :return: 
+
+    """
+    SHEETNAME_REGEX = re.compile(r"(?P<year>\d{2})-(?P<month>\d{2})-(?P<tableno>\d{1,2}(-[\da-zA-Z0-9_]+)?)")
+    wb = load_workbook(xlsxpath, data_only=True)
+    snames = wb.sheetnames
+    if verbose == True:
+        print(snames)
+    has_pivot = False
+    has_pivot_cache_records = False
+    is_column_oriented = False
+    for ws in wb.worksheets:
+        if verbose == True:
+            print('title: ' + ws.title)
+            print('dimensions: ' + ws.dimensions)
+            if ws.print_title_cols != None:
+                print('print_title_cols: ' + ws.print_title_cols)
+            if ws.print_title_rows != None:
+                print('print_title_rows: ' + ws.print_title_rows)
+            print('_pivots len: ' + str(len(ws._pivots)))
+        if len(ws._pivots) > 0:
+            has_pivot = True
+            if verbose == True:
+                print('pivot_table.cache.records: ' + str(ws._pivots[0].cache.records))
+            if ws._pivots[0].cache.records != None:
+                has_pivot_cache_records = True
+        if verbose == True:
+            print('merged_cells len: ' + str(len(ws.merged_cells.ranges)))
+        # the year, month and table name are in ws.title. This is the name of the sheet if not a pivot table.
+        mt = SHEETNAME_REGEX.match(ws.title)
+        if mt != None:
+            if verbose == True:
+                print('tableno: ' + mt.group('tableno'))
+            is_column_oriented = mt.group('tableno').endswith('m')
+    dataformat = 'CTF'
+    if has_pivot_cache_records == True:
+        dataformat = 'PVTsc'
+    elif has_pivot == True:
+        dataformat = 'PVT'
+    elif is_column_oriented == True:
+        dataformat = 'COF'
+
+    return dataformat
+
 def pivot_to_dataframe(xlsxpath, verbose=False):
     """Opens xlsx pivot workbook and returns a pandas DataFrame
     
@@ -75,7 +132,7 @@ def pivot_to_dataframe(xlsxpath, verbose=False):
 
     """
     # Load an Excel file
-    wb = openpyxl.load_workbook(xlsxpath)
+    wb = load_workbook(xlsxpath)
     snames = wb.sheetnames
     if verbose == True: 
         print("Worksheets: ")
@@ -162,9 +219,6 @@ def pivot_to_dataframe(xlsxpath, verbose=False):
     df = pd.DataFrame.from_dict(rows)
     return df
 
-import pandas as pd
-import openpyxl
-from openpyxl import worksheet
 def xlsx_to_dataframe(xlsxpath, verbose=False):
     """Open an xlsx workbook and look for subtypes.
     
