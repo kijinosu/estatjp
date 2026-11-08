@@ -17,6 +17,14 @@ This folder contains Jupyter notebooks created in the development of `estatjp`.
    exceptions-dev-01.ipynb
    apiurl-functions-01.ipynb
    apiurl-functions-02.ipynb
+   pivot-xlsx-functions-01.ipynb
+   pivot-xlsx-functions-02.ipynb
+   moj-isa-via-api.ipynb
+   non-pivot-xlsx-01.ipynb
+   non-pivot-xlsx-02.ipynb
+   non-pivot-xlsx-03.ipynb
+   xlsx-ctf-functions-01.ipynb
+   standardization-01.ipynb
 
 ## DevAPI01.ipynb
 
@@ -37,6 +45,38 @@ Developing functions for manipulating the API url
 ## apiurl-functions-02.ipynb
 
 Testing the functions after building them into estatjp v0.1.5
+
+## pivot-xlsx-functions-01.ipynb
+
+Developing the excel module for accessing data in pivot workbooks.
+
+## pivot-xlsx-functions-02.ipynb
+
+Test the functions developed in the [previous notebook](pivot-xslx-functions-01.html) and added as module `excel`.
+
+## moj-isa-via-api.ipynb
+
+Access tables available via API for use as references for developing the excel module.
+
+## non-pivot-xlsx-01.ipynb
+
+Develop functions for accessing data in xlsx workbooks that do not contain pivot tables.
+
+## non-pivot-xlsx-02.ipynb
+
+Further develop and extend the functionality until it can handle all excel tables in the [ISA data release for December 2014](http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001133760)
+
+## non-pivot-xlsx-03.ipynb
+
+Parsing the column headers using a tree data structure.
+
+## xslx-ctf-functions-01.ipynb
+
+Cross tabulated format (CTF) functions 1. Add the ctf module for converting cross tabulated sheets to column oriented format.
+
+## standardization-01.ipynb
+
+This notebook is for downloading and adapting global standards data for the purpose of providing compatability between Japanese government datasets and international datasets.
 
 # References
 

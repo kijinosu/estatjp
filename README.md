@@ -77,10 +77,27 @@ Annual Conference of the Information Systems Society in Japan ISSJ2023*,
 
 </div>
 
+<div id="ref-basha2024pivot" class="container csl-entry">
+
+Basha, Mahaboob. (2024, June 13). *Getting raw data from pivot tables
+from excel in python: A step-by-step guide*. Medium.
+<https://mahaboob.medium.com/getting-raw-data-from-pivot-tables-from-excel-in-python-a-step-by-step-guide-977a55da432e>
+
+</div>
+
 <div id="ref-cocosan2023python.en" class="container csl-entry">
 
 cocosan. (2023). *Python apuri: Seifu tokei e-stat wo shigoto ni ikase!*
 <https://www.youtube.com/watch?v=hiaK-jTXpCI>.
+
+</div>
+
+<div id="ref-deHaas2019AgeOfMigration" class="container csl-entry">
+
+Haas, Hein de, Castles, Stephen, & Miller, Mark J. (2019). *The age of
+migration: International population movements in the modern world* (6th
+ed.). Bloomsbury Academic.
+<https://www.bloomsburyonlineresources.com/the-age-of-migration-6th-edition/>
 
 </div>
 
@@ -149,6 +166,15 @@ katsuyo!* Impress R&D.
 
 </div>
 
+<div id="ref-un_population_division_international_migrant_stock"
+class="container csl-entry">
+
+United Nations, Department of Economic and Social Affairs, Population
+Division. (2024). *International migrant stock*.
+<https://www.un.org/development/desa/pd/content/international-migrant-stock>
+
+</div>
+
 <div id="ref-wakabayashi2015public.en" class="container csl-entry">
 
 Wakabayashi, Chihiro, Shinmura, Hiromi, Ando, Miri, Shimada, Masako, &
@@ -156,6 +182,14 @@ Yanagawa, Hiroshi. (2015). Kōeisei topikksu dai 13 kai seifutōkei no
 sōgōmadoguchi e-stat: Chiiki shindan he no katsuyō - jissen herusu
 puromōshon. *Gekkan Chiiki Igaku*, *29*(2), 52.
 <https://doi.org/10.60261/chiikiigaku.29.2_52>
+
+</div>
+
+<div id="ref-worldbank_classify_countries" class="container csl-entry">
+
+World Bank. (n.d.). *How does the world bank classify countries?* World
+Bank Data Help Desk. Retrieved October 20, 2026, from
+<https://datahelpdesk.worldbank.org/knowledgebase/articles/378834-how-does-the-world-bank-classify-countries>
 
 </div>
 

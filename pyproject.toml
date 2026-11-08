@@ -13,7 +13,7 @@ requires = ["hatchling"]
 [project]
 name = "estatjp"
 # You can chose to use dynamic versioning with hatch or static where you add it manually.
-version = "v0.1.5"
+version = "v0.2.0.4"
 
 description = "A Python package for accessing Japanese government data on its e-Stat portal"
 authors = [
@@ -44,7 +44,8 @@ dependencies = [
     "importlib_metadata>=3.6; python_version < '3.10'",
     "pandas>=3.0.1",
     "dotenv>=0.9.9",
-    "requests>=2.32.5"
+    "requests>=2.32.5",
+    "pyrfc6266>=1.0.2"
 ]
 exclude_patterns = ["_build"]
 bibtex_bibfiles = ["bibliography.bib"]

@@ -28,3 +28,6 @@ The `E-Stat`_ portal site contains 'databases' that can be accessed via API urls
 .. _pandas DataFrames: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
 
 """
+
+__all__ = ["api", "excel", "exceptions"]
+

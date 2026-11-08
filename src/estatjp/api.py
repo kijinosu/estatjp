@@ -2,7 +2,7 @@
 
 The API provides data in CSV, JSON and XML formats. This version provides for the CSV format only. It implements features of the [e-Stat API Version 4.4](https://www.e-stat.go.jp/api/api-info/e-stat-manual/#api_4_4).
 
-The main task is to request and parse a CSV stream to produce a `pandas.DataFrame` object. The `pandas.read_csv()` cannot be used as-is because CSV streams from e-Stat start with a header of metadata which confuses pandas. For more detail see development notes as chronicled in Read the Docs pages [DevAPI01.ipynb](https://estatpy.readthedocs.io/en/latest/chronicle/DevAPI01.html) and [DevAPI02.ipynb](https://estatpy.readthedocs.io/en/latest/chronicle/DevAPI02.html).
+The main task is to request and parse a CSV stream to produce a `pandas.DataFrame` object. The `pandas.read_csv()` cannot be used as-is because CSV streams from e-Stat start with a header of metadata which confuses pandas. For more detail see development notes as chronicled in Read the Docs pages [DevAPI01.ipynb](https://estatjp.readthedocs.io/en/latest/chronicle/DevAPI01.html) and [DevAPI02.ipynb](https://estatjp.readthedocs.io/en/latest/chronicle/DevAPI02.html).
 
 """
 import pandas as pd
