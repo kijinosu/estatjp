@@ -29,5 +29,5 @@ The `E-Stat`_ portal site contains 'databases' that can be accessed via API urls
 
 """
 
-__all__ = ["api", "excel", "exceptions"]
+__all__ = ["api", "xlsx", "exceptions"]
 
