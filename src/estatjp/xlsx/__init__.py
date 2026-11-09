@@ -6,4 +6,4 @@ The main task is to produce a `pandas.DataFrame` object. See development notes a
 
 """
 
-__all__ = ["xlsx"]
+__all__ = ["xlsx","ctf","pvt"]
