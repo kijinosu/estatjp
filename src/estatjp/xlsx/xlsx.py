@@ -7,9 +7,41 @@ import requests
 import pyrfc6266
 from pathlib import Path
 import pandas as pd
-from openpyxl import worksheet
 from openpyxl import load_workbook
 from estatjp import exceptions as xs
+from estatjp.xlsx.ctf import dataframe_from_ctf_file
+from estatjp.xlsx.pvt import pivot_to_dataframe
+
+def dataframe_from_xlsx(xlsxpath, verbose=False):
+    """Top level function for getting a pandas data frame from an Excel file.
+
+    :param xlsxpath: Path to file.
+    :type xlsxpath: Path
+
+    :param verbose: Provide messaging to track progress.
+    :type verbose: bool
+
+    :return: Pandas dataframe if successful, None if not.
+    :rtype: pandas.DataFrame
+
+    """
+    dataformat = get_dataformat(xlsxpath, verbose=verbose)
+    if verbose == True:
+        print('data format: ' + dataformat)
+
+    df = None
+    if dataformat == 'CTF':
+        df = dataframe_from_ctf_file(xlsxpath=xlsxpath, verbose=verbose)
+    elif dataformat == 'PVT':
+        df = pivot_to_dataframe(xlsxpath=xlsxpath, verbose=verbose)
+    elif dataformat == 'XLS':
+        print("XLS files not handled: " + str(xlsxpath))
+        return None
+    else:
+        print("File format not handled: " + str(xlsxpath))
+
+    return df
+
 
 def download_to_folder(
         url, 
@@ -75,13 +107,16 @@ def get_dataformat(xlsxpath, verbose=False):
     :rtype: string
 
     """
+    p = Path(xlsxpath)
+    if p.suffix == '.xls':
+        return 'XLS'
+    
     SHEETNAME_REGEX = re.compile(r"(?P<year>\d{2})-(?P<month>\d{2})-(?P<tableno>\d{1,2}(-[\da-zA-Z0-9_]+)?)")
     wb = load_workbook(xlsxpath, data_only=True)
     snames = wb.sheetnames
     if verbose == True:
         print(snames)
     has_pivot = False
-    has_pivot_cache_records = False
     is_column_oriented = False
     for ws in wb.worksheets:
         if verbose == True:
@@ -113,18 +148,3 @@ def get_dataformat(xlsxpath, verbose=False):
         dataformat = 'COF'
 
     return dataformat
-
-
-def xlsx_to_dataframe(xlsxpath, verbose=False):
-    """Open an xlsx workbook and look for subtypes.
-    
-    :param xlsxpath: Path to xlsx file
-    :type xlsxpath: Path
-
-    :param verbose: Provide messaging to track progress.
-    :type verbose: bool
-
-    :return: Pandas dataframe if successful, None if not.
-
-    """
-    return "a"

@@ -24,6 +24,8 @@ This folder contains Jupyter notebooks created in the development of `estatjp`.
    non-pivot-xlsx-02.ipynb
    non-pivot-xlsx-03.ipynb
    xlsx-ctf-functions-01.ipynb
+   xlsx-ctf-functions-02.ipynb
+   xlsx-cft-alternate-stub-parser.ipynb
    standardization-01.ipynb
 
 ## DevAPI01.ipynb
